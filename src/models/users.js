@@ -44,7 +44,7 @@ function create(username, password){
       .returning('*')
     )
   })
-  .then(function([data]){
+  .then(function([ data ]){
     // 4. strip hashed password away from object
     delete data.password
     // 5. "return/continue" promise
