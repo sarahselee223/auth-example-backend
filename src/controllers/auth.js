@@ -43,6 +43,9 @@ function login(req, res, next){
 //////////////////////////////////////////////////////////////////////////////
 
 function isAuthenticated(req, res, next){
+  if(!req.header.authorization){
+    return next({ status: 401, message: 'Unauthorized' })
+  }
   const [scheme, credentials] = req.headers.authorization.split(' ')
 
   jwt.verify(credentials, process.env.SECRET, (err, payload)=>{
