@@ -26,30 +26,7 @@ function getOneByUserName(username){
 
 function create(username, password){
 
-  // check to see of user already exists
-  return getOneByUserName(username)
-  .then(function(data){
-    // if user already exists, return 400
-    if(data) throw { status: 400, message:'User already exists'}
 
-    // hash password
-    return bcrypt.hash(password, 10)
-  })
-  .then(function(hashedPassword){
-
-    // 3. Insert record into database
-    return (
-      db('users')
-      .insert({ username, password: hashedPassword })
-      .returning('*')
-    )
-  })
-  .then(function([data]){
-    // 4. strip hashed password away from object
-    delete data.password
-    // 5. "return/continue" promise
-    return data
-  })
 }
 
 module.exports = {
