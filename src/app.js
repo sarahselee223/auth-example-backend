@@ -27,12 +27,12 @@ app.use('/users', require('./routes/users'))
 
 app.get('/protected',
         authController.isAuthenticated,
-        function(req, res, next){ res.send({ claim: req.claim, message: "For authenticated eyes only" }) })
+        function(req, res, next){ res.send({ id: req.claim.id, message: "For authenticated eyes only" }) })
 
 app.get('/protected/:userId',
         authController.isAuthenticated,
         authController.isSelf,
-        function(req, res, next){ res.send({ claim: req.claim, message: "For your eyes only"}) })
+        function(req, res, next){ res.send({ id: req.claim.id, message: "For your eyes only"}) })
 
 //////////////////////////////////////////////////////////////////////////////
 // Default Route

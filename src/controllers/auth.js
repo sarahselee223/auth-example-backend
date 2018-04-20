@@ -38,15 +38,23 @@ function login(req, res, next){
   .catch(next)
 }
 
+
+function getAuthStatus(req, res, next){
+    res.status(200).send({id:req.claim.id})
+}
+
 //////////////////////////////////////////////////////////////////////////////
 // Quality of Life functions
 //////////////////////////////////////////////////////////////////////////////
 
 function isAuthenticated(req, res, next){
-  if(!req.header.authorization){
+
+  if(!req.headers.authorization){
     return next({ status: 401, message: 'Unauthorized' })
   }
   const [scheme, credentials] = req.headers.authorization.split(' ')
+
+
 
   jwt.verify(credentials, process.env.SECRET, (err, payload)=>{
     if(err){
@@ -72,6 +80,7 @@ function isSelf(req, res, next){
 
 module.exports = {
   login,
+  getAuthStatus,
   isAuthenticated,
   isSelf
 }
